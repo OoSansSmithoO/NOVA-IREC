@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
+
+# Public discovery files
 Sitemap: https://oosanssmithoo.github.io/NOVA-IREC/sitemap.xml
