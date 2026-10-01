@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-const nav = [["PROGRAM", "#program"], ["VEHICLE", "#vehicle"], ["PAYLOADS", "#payloads"], ["TEAMS", "#team"], ["OUTREACH", "#outreach"], ["SUPPORT", "#support"]] as const;
+const nav = [["PROGRAM", "#program"], ["MISSION PROFILE", "#mission-profile"], ["PAYLOADS", "#payloads"], ["TEAMS", "#team"], ["OUTREACH", "#outreach"], ["SUPPORT", "#support"]] as const;
 
 const payloads = [
   { code: "PL-01", title: "Atmospheric sensing", status: "FLIGHT ARTICLE", copy: "A modular sensor bay recording pressure, temperature, humidity, acceleration, and attitude through ascent and recovery.", metric: "100 Hz", label: "SAMPLE RATE" },
@@ -15,6 +15,34 @@ const phases = [
   ["04", "Integration", "Payload, avionics, recovery, and vehicle teams verify the complete flight stack."],
   ["05", "Flight", "The sounding rocket carries the experiment through ascent, apogee, descent, and recovery."],
   ["06", "Evidence", "Recovered data becomes the engineering result, the competition report, and next year’s baseline."],
+];
+
+const missionChapters = [
+  ["01", "Define", "Mission objectives become controlled requirements, interfaces, constraints, and measurable success criteria."],
+  ["02", "Design", "Students close the vehicle, payload, recovery, avionics, and operations architecture as one flight system."],
+  ["03", "Manufacture", "Drawings become inspected hardware, wired assemblies, calibrated sensors, and documented configurations."],
+  ["04", "Verify", "Bench, deployment, integration, and rehearsal evidence retires risk before the vehicle reaches the rail."],
+  ["05", "Launch", "Flight operations execute the approved procedure while telemetry records the mission from ignition to apogee."],
+  ["06", "Recover", "The team retrieves the vehicle, preserves payload data, assesses performance, and returns lessons to the next campaign."],
+];
+
+const missionMilestones = [
+  ["T−180 D", "SYSTEM REQUIREMENTS REVIEW", "BASELINED"],
+  ["T−120 D", "PRELIMINARY DESIGN REVIEW", "PLANNED"],
+  ["T−75 D", "CRITICAL DESIGN REVIEW", "PLANNED"],
+  ["T−30 D", "PAYLOAD QUALIFICATION", "PLANNED"],
+  ["T−07 D", "FLIGHT READINESS REVIEW", "PLANNED"],
+  ["T+00", "LAUNCH · RECOVERY · DATA", "MISSION"],
+];
+
+const flightSteps = [
+  { number: "00", title: "Ignition", detail: "Motor ignition establishes stable thrust before the vehicle commits to the rail.", x: 45, y: 350 },
+  { number: "01", title: "Rail departure", detail: "The vehicle clears the guide at flightworthy velocity and begins free ascent.", x: 230, y: 230 },
+  { number: "02", title: "Max-Q", detail: "Airframe and avionics pass through the point of greatest aerodynamic loading.", x: 430, y: 69 },
+  { number: "03", title: "Apogee", detail: "Vertical velocity approaches zero and the recovery sequence transitions to descent.", x: 650, y: 57 },
+  { number: "04", title: "Drogue", detail: "The first recovery event stabilizes the vehicle for controlled high-altitude descent.", x: 795, y: 151 },
+  { number: "05", title: "Main deploy", detail: "The primary canopy reduces descent rate for a recoverable touchdown.", x: 930, y: 285 },
+  { number: "06", title: "Recovery", detail: "The team secures the vehicle, payload, flight computer, and experiment evidence.", x: 1160, y: 350 },
 ];
 
 const teams = [
@@ -50,6 +78,14 @@ const inKindOptions = ["Materials & fabrication", "Electronics & test equipment"
 
 function Mark({ small = false }: { small?: boolean }) {
   return <span className={`mark ${small ? "small" : ""}`} aria-label="superNOVA"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 7 62 31 88 36 69 55 73 82 50 69 27 82 31 55 12 36 38 31Z"/><path className="mark-core" d="M50 21 57 39 76 42 62 56 65 72 50 63 35 72 38 56 24 42 43 39Z"/></svg></span>;
+}
+
+function PayloadSpecimens({ code }: { code: string }) {
+  const labels = code === "PL-01" ? ["BAROMETRIC CELL", "9-AXIS IMU"] : code === "PL-02" ? ["DEPLOYMENT CAM", "ARMING LOGIC"] : ["OPTICAL ARRAY", "RF TRANSCEIVER"];
+  return <div className={`payload-specimens ${code.toLowerCase()}`} aria-label={`${labels[0]} and ${labels[1]} line-art concepts`}>
+    <figure><svg viewBox="0 0 120 90" aria-hidden="true">{code === "PL-01" ? <><circle cx="60" cy="45" r="29"/><circle cx="60" cy="45" r="16"/><path d="M60 8v14m0 46v14M23 45h14m46 0h14M35 20l10 12m40-12L75 32M35 70l10-12m40 12L75 58"/></> : code === "PL-02" ? <><circle cx="52" cy="45" r="27"/><path d="M52 18v27l23 13M15 70h90M82 26h20v38H82"/><circle cx="52" cy="45" r="6"/></> : <><rect x="18" y="17" width="84" height="56" rx="7"/><circle cx="60" cy="45" r="22"/><circle cx="60" cy="45" r="9"/><path d="M28 8v9m16-9v9m32-9v9m16-9v9"/></>}</svg><figcaption>{labels[0]}</figcaption></figure>
+    <figure><svg viewBox="0 0 120 90" aria-hidden="true">{code === "PL-01" ? <><rect x="27" y="13" width="66" height="64" rx="5"/><path d="M39 28h42M39 43h19m8 0h15M39 58h42M17 25h10m-10 16h10m-10 16h10m66-32h10m-10 16h10m-10 16h10"/><circle cx="60" cy="43" r="8"/></> : code === "PL-02" ? <><rect x="18" y="17" width="84" height="56" rx="4"/><path d="M30 30h22v18H30zm38 0h22v18H68zM30 59h60M41 48v11m38-11v11"/><circle cx="60" cy="59" r="5"/></> : <><path d="M18 61h84M30 61V34m60 27V34M30 34c18-22 42-22 60 0"/><path d="M43 47c10-10 24-10 34 0M54 57c4-4 8-4 12 0"/><circle cx="60" cy="66" r="7"/></>}</svg><figcaption>{labels[1]}</figcaption></figure>
+  </div>;
 }
 
 function Intro({ onComplete, cssOnly = false }: { onComplete: () => void; cssOnly?: boolean }) {
@@ -88,9 +124,10 @@ function SponsorPlanner() {
   return <section className="sponsor-planner" aria-labelledby="sponsor-planner-title"><div className="planner-heading"><div><div className="eyebrow">PARTNERSHIP PLANNER · NO PAYMENT TAKEN</div><h2 id="sponsor-planner-title">Give the next generation lift.</h2></div><p>Explore a proposed financial or in-kind partnership, then open a conversation with the club. Packages and recognition remain subject to team and college review.</p></div><div className="planner-layout"><div className="planner-controls"><div className="planner-tabs" role="tablist" aria-label="Support type"><button className={mode === "financial" ? "active" : ""} onClick={() => setMode("financial")}>FINANCIAL SUPPORT</button><button className={mode === "in-kind" ? "active" : ""} onClick={() => setMode("in-kind")}>IN-KIND SUPPORT</button></div>{mode === "financial" ? <><p className="control-label">PROPOSED SPONSOR PACKAGES</p><div className="tier-list">{sponsorTiers.map((tier) => <button key={tier.name} className={Math.abs(amount - tier.amount) < tier.amount * .12 ? "selected" : ""} onClick={() => setTier(tier.amount)}><i/><span><b>{tier.name}</b><small>{tier.copy}</small></span><strong>{money(tier.amount)}<small>starting point</small></strong></button>)}</div><label className="donation-slider"><span>EXPLORE A CONTRIBUTION <b>{money(amount)}</b></span><input type="range" min="0" max="100" value={position} onChange={(event) => setPosition(Number(event.target.value))} aria-label="Proposed contribution amount"/><small><i>$250</i><i>$1,000,000</i></small></label></> : <><p className="control-label">WHAT COULD YOU BRING TO THE MISSION?</p><div className="inkind-list">{inKindOptions.map((item) => <label key={item}><input type="checkbox" checked={selectedInKind.includes(item)} onChange={() => toggleInKind(item)}/><span>{item}</span></label>)}</div><p className="planner-note">Equipment, services, test access, and mentoring can be as valuable as funding. Scope, value, timing, and recognition are agreed directly with the club.</p></>}</div><div className="impact-card"><div className="impact-kicker">YOUR POTENTIAL IMPACT <span>✦</span></div>{mode === "financial" ? <><strong className="impact-amount">{money(amount)}</strong><p>{tierName} · proposed</p><div className="allocation-bar">{allocations.map(([label, share]) => <i key={label} style={{ width: `${share * 100}%` }}/>)}</div><ul className="allocation-list">{allocations.map(([label, share]) => <li key={label}><span>{label}</span><b>{money(Math.round(amount * share))}</b></li>)}</ul>{position === 100 && <div className="hyper-donor"><span>HYPER-DONOR</span><h3>Mission-scale access unlocked.</h3><p>Explore executive engineering briefings, named program initiatives, multi-year workforce pathways, advanced test partnerships, and tailored impact reporting.</p></div>}</> : <><h3 className="inkind-impact">Expertise.<br/>Equipment.<br/>Opportunity.</h3><p>{selectedInKind.length} support {selectedInKind.length === 1 ? "area" : "areas"} selected</p><ul className="selected-support">{selectedInKind.map((item) => <li key={item}>✓ {item}</li>)}</ul></>}<div className="brief-list"><b>START A CONVERSATION ABOUT</b><span>✓ Student engineering outcomes</span><span>✓ Proposed project progress briefings</span><span>✓ Recognition and outreach collaboration</span></div><a className="impact-button" href={`mailto:jschmitt@schmittsanchezdefense.com?subject=${encodeURIComponent(briefSubject)}`}>BUILD A SPONSOR BRIEF</a></div></div></section>;
 }
 
-function Header({ progress, day, toggleDay }: { progress: number; day: boolean; toggleDay: () => void }) {
+function Header({ progress, day, toggleDay, beginSponsorJourney }: { progress: number; day: boolean; toggleDay: () => void; beginSponsorJourney: () => void }) {
   const [open, setOpen] = useState(false);
-  return <header className="header"><div className="nav-wrap"><a className="brand" href="#top"><Mark small/><span>superNOVA</span></a><nav className="desktop-nav" aria-label="Primary navigation">{nav.map(([label, href]) => <a className={href === "#support" ? "sponsor-nav" : ""} key={href} href={href}>{label === "SUPPORT" ? "SPONSOR US" : label}</a>)}<button onClick={toggleDay}>{day ? "NIGHT OPS" : "DAY OPS"}</button></nav><button className="menu-button" aria-expanded={open} onClick={() => setOpen(!open)}>{open ? "CLOSE" : "MISSION MENU"}</button></div>{open && <nav className="mobile-nav" aria-label="Mobile navigation">{nav.map(([label, href]) => <a className={href === "#support" ? "sponsor-nav" : ""} key={href} href={href} onClick={() => setOpen(false)}>{label === "SUPPORT" ? "SPONSOR US" : label}</a>)}<button onClick={toggleDay}>{day ? "NIGHT OPS" : "DAY OPS"}</button></nav>}<div className="progress"><i style={{ width: `${progress}%` }}/></div></header>;
+  const links = (mobile = false) => nav.map(([label, href]) => href === "#support" ? <button className="sponsor-nav" key={href} onClick={() => { setOpen(false); beginSponsorJourney(); }}>SPONSOR US</button> : <a key={href} href={href} onClick={() => mobile && setOpen(false)}>{label}</a>);
+  return <header className="header"><div className="nav-wrap"><a className="brand header-brand" href="#top" aria-label="superNOVA home"><img src={`${import.meta.env.BASE_URL}supernova-header-logo.jpg`} alt="superNOVA rocket and orbital logo"/></a><nav className="desktop-nav" aria-label="Primary navigation">{links()}<button onClick={toggleDay}>{day ? "NIGHT OPS" : "DAY OPS"}</button></nav><button className="menu-button" aria-expanded={open} onClick={() => setOpen(!open)}>{open ? "CLOSE" : "MISSION MENU"}</button></div>{open && <nav className="mobile-nav" aria-label="Mobile navigation">{links(true)}<button onClick={toggleDay}>{day ? "NIGHT OPS" : "DAY OPS"}</button></nav>}<div className="progress"><i style={{ width: `${progress}%` }}/></div></header>;
 }
 
 export default function App() {
@@ -100,6 +137,8 @@ export default function App() {
   const [top, setTop] = useState(false);
   const [copied, setCopied] = useState(false);
   const [replayIntro, setReplayIntro] = useState(false);
+  const [sponsorCountdown, setSponsorCountdown] = useState<number | null>(null);
+  const [activeFlightStep, setActiveFlightStep] = useState(0);
   const year = useMemo(() => new Date().getFullYear(), []);
 
   useEffect(() => {
@@ -114,19 +153,63 @@ export default function App() {
   const toggleDay = () => setDay((value) => { const next = !value; try { localStorage.setItem("nova.theme", next ? "day" : "night"); } catch { /* optional */ } return next; });
   const copyPage = async () => { try { await navigator.clipboard.writeText(location.href); setCopied(true); setTimeout(() => setCopied(false), 1600); } catch { setCopied(false); } };
   const finishReplay = () => { setReplayIntro(false); scrollTo({ top: 0, behavior: "smooth" }); };
+  const beginSponsorJourney = () => {
+    document.querySelector("#support")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setSponsorCountdown(4);
+  };
+
+  useEffect(() => {
+    if (sponsorCountdown === null) return;
+    const timer = window.setTimeout(() => {
+      if (sponsorCountdown === 1) {
+        document.querySelector(".sponsor-planner")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        setSponsorCountdown(null);
+      } else {
+        setSponsorCountdown(sponsorCountdown - 1);
+      }
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [sponsorCountdown]);
 
   return <div id="top" className={`site ${day ? "day" : "night"}`}>
-    <a className="skip" href="#content">SKIP TO MISSION CONTENT</a><Header progress={progress} day={day} toggleDay={toggleDay}/>
+    <a className="skip" href="#content">SKIP TO MISSION CONTENT</a><Header progress={progress} day={day} toggleDay={toggleDay} beginSponsorJourney={beginSponsorJourney}/>
+    {sponsorCountdown !== null && <div className="sponsor-transfer" role="status"><span>SUPPORT THE MISSION</span><b>DONATION CONTROL IN {sponsorCountdown}</b><i><em style={{ animationDuration: "4s" }}/></i><button onClick={() => { setSponsorCountdown(null); document.querySelector(".sponsor-planner")?.scrollIntoView({ behavior: "smooth" }); }}>CONTINUE NOW ↓</button></div>}
     <main id="content">
-      <section className="hero"><div className="hero-orbit"/><div className="hero-grid"/><div className="hero-copy"><div className="eyebrow">superNOVA · NVCC COLLEGIATE ROCKETRY</div><h1>ENGINEER THE PAYLOAD.<br/><em>PROVE IT IN FLIGHT.</em></h1><p>A 170+ student Northern Virginia Community College team designing, qualifying, and flying sounding-rocket payloads for the International Rocket Engineering Competition.</p><div className="actions"><a className="primary" href="#payloads">EXPLORE THE PAYLOADS</a><a className="secondary" href="#contact">JOIN THE MISSION</a></div></div><div className="hero-vehicle" aria-label="Technical illustration of superNOVA sounding rocket"><img src={`${import.meta.env.BASE_URL}rocket.svg`} alt="superNOVA IREC sounding rocket technical illustration"/></div><div className="trust"><span>170+ STUDENTS</span><span>FLIGHT TESTED</span><span>SCIENCE DRIVEN</span><span>IREC READY</span></div></section>
+      <section className="hero"><div className="hero-orbit"/><div className="hero-grid"/><div className="hero-copy"><div className="eyebrow">superNOVA · NVCC COLLEGIATE ROCKETRY</div><h1>ENGINEER THE PAYLOAD.<br/><em>PROVE IT IN FLIGHT.</em></h1><p>A 170+ student Northern Virginia Community College team designing, qualifying, and flying sounding-rocket payloads for the International Rocket Engineering Competition.</p><div className="actions"><a className="primary" href="#payloads">EXPLORE THE PAYLOADS</a><a className="secondary" href="#contact">JOIN THE MISSION</a></div></div><div className="hero-vehicle hero-blueprint" aria-label="Cutaway technical illustration of the superNOVA sounding rocket"><img src={`${import.meta.env.BASE_URL}rocket-cutaway.svg`} alt="Detailed superNOVA IREC sounding rocket cutaway showing nosecone, payload, avionics, recovery, motor, and fins"/></div><div className="trust"><span>170+ STUDENTS</span><span>FLIGHT TESTED</span><span>SCIENCE DRIVEN</span><span>IREC READY</span></div></section>
 
       <section id="program" className="program-intro"><div className="program-lead"><div className="eyebrow">WELCOME TO STUDENT ROCKETRY</div><h2>A classroom with a countdown.</h2><p className="lead">Student rocketry is systems engineering made tangible: a multidisciplinary team accepts a mission, manages risk, builds hardware, proves it through testing, and stands behind the result on launch day.</p><p>superNOVA brings NVCC students together around one demanding flight program—uniting engineering, science, operations, communication, and community leadership in a shared campaign from concept to recovery.</p><div className="actions"><a className="primary" href="#team">MEET THE SUBSYSTEMS</a><a className="secondary" href="#support">SUPPORT THE CAMPAIGN</a></div></div><div className="program-pillars"><article><span>01</span><h3>DESIGN</h3><p>Translate mission goals into requirements, interfaces, analyses, drawings, and controlled hardware.</p></article><article><span>02</span><h3>BUILD</h3><p>Manufacture, wire, integrate, document, and inspect a complete flight system.</p></article><article><span>03</span><h3>PROVE</h3><p>Test assumptions, qualify subsystems, rehearse operations, and close risk with evidence.</p></article><article><span>04</span><h3>FLY</h3><p>Operate professionally, recover safely, analyze data, and return lessons to the next design.</p></article></div></section>
 
+      <section id="mission-profile" className="mission-profile" aria-labelledby="mission-profile-title">
+        <div className="mission-hero">
+          <div className="mission-stars" aria-hidden="true"/><div className="mission-horizon" aria-hidden="true"/>
+          <div className="mission-hero-copy"><div className="eyebrow">2026 IREC CAMPAIGN · MANASSAS, VIRGINIA</div><h2 id="mission-profile-title">MISSION<br/><em>NOVA</em></h2><p>One student-led flight campaign connecting systems engineering, payload science, qualification testing, launch operations, and recoverable evidence.</p><div className="actions"><a className="primary" href="#mission-sequence">VIEW THE FLIGHT PLAN</a><a className="secondary" href="#support">SPONSOR THE MISSION</a></div></div>
+          <div className="mission-hero-status"><span>CAMPAIGN</span><b>ACTIVE</b><i/><span>TEAM</span><b>170+ STUDENTS</b><i/><span>OBJECTIVE</span><b>IREC FLIGHT</b></div>
+        </div>
+
+        <div id="mission-sequence" className="flight-sequence">
+          <div className="section-head"><div><div className="eyebrow">FLIGHT SEQUENCE · NOTIONAL PROFILE</div><h2>From rail departure to recovered data.</h2></div><p>A readable mission path gives every subsystem the same operational picture. Final event timing and performance will follow the verified flight configuration.</p></div>
+          <div className="trajectory" role="img" aria-label="Notional mission profile showing ignition, rail departure, maximum dynamic pressure, apogee, drogue deployment, main parachute deployment, and recovery">
+            <svg viewBox="0 0 1200 420" aria-hidden="true"><defs><linearGradient id="flightGlow" x1="0" x2="1"><stop stopColor="#f0b323"/><stop offset=".72" stopColor="#ffd166"/><stop offset="1" stopColor="#6fa687"/></linearGradient></defs><path className="trajectory-grid" d="M0 350H1200M0 270H1200M0 190H1200M0 110H1200M150 20V390M350 20V390M550 20V390M750 20V390M950 20V390"/><path className="trajectory-line" d="M45 350 C170 345 205 205 365 98 S620 35 705 72 C790 108 835 220 930 285 S1080 350 1160 350"/><g className="trajectory-nodes">{flightSteps.map((step, index) => <circle className={index === activeFlightStep ? "active" : ""} key={step.number} cx={step.x} cy={step.y} r={index === activeFlightStep ? 11 : 7}/>)}</g></svg>
+            <div className="trajectory-readout" aria-live="polite"><span>EVENT {flightSteps[activeFlightStep].number}</span><b>{flightSteps[activeFlightStep].title}</b><p>{flightSteps[activeFlightStep].detail}</p></div>
+            <ol>{flightSteps.map((step, index) => <li className={index === activeFlightStep ? "active" : ""} key={step.number}><button onClick={() => setActiveFlightStep(index)} onMouseEnter={() => setActiveFlightStep(index)} onFocus={() => setActiveFlightStep(index)}><span>{step.number}</span><b>{step.title}</b></button></li>)}</ol>
+          </div>
+        </div>
+
+        <div className="mission-chapters"><div className="eyebrow">CAMPAIGN CHAPTERS</div><h2>Six gates. One accountable mission.</h2><div className="chapter-grid">{missionChapters.map(([number, title, copy]) => <article key={number}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div></div>
+
+        <div className="mission-ops">
+          <div className="milestone-ledger"><div className="eyebrow">MISSION MILESTONES · WORKING BASELINE</div><h2>Review gates to launch day.</h2><div className="ledger-head"><span>COUNT</span><span>EVENT</span><span>STATUS</span></div>{missionMilestones.map(([time, event, status]) => <div className="ledger-row" key={event}><time>{time}</time><b>{event}</b><span className={status === "BASELINED" ? "complete" : ""}>{status}</span></div>)}</div>
+          <aside className="payload-dashboard" aria-label="Payload performance dashboard"><div className="dashboard-top"><span>PAYLOAD CHANNEL · PL-01</span><i>SIMULATED</i></div><h3>SCIENCE BAY</h3><div className="dashboard-orbit"><span/><b>LINK<br/>NOMINAL</b></div><dl><div><dt>SAMPLE RATE</dt><dd>100 Hz</dd></div><div><dt>DOWNLINK</dt><dd>2.4 GHz</dd></div><div><dt>ARMING</dt><dd>3× REDUNDANT</dd></div><div><dt>DATA STATE</dt><dd>RECORDING</dd></div></dl><div className="signal-strip"><i/><i/><i/><i/><i/><i/></div><small>DEMONSTRATION DATA · REPLACE WITH VERIFIED FLIGHT VALUES</small></aside>
+        </div>
+
+        <div className="mission-sponsor"><div><span>THE NEXT MILESTONE NEEDS A MISSION PARTNER</span><h2>Put student hardware on the rail—and bring the evidence home.</h2></div><a className="primary" href="#support">SPONSOR MISSION NOVA</a></div>
+      </section>
+
       <section id="mission" className="split"><div><div className="eyebrow">THE MISSION</div><h2>One launch. Thousands of engineering decisions.</h2></div><div className="panel"><b>COMPETITION OBJECTIVE</b><p>superNOVA develops a competition-ready sounding rocket and payload architecture that turns classroom theory into traceable requirements, tested hardware, and recoverable flight data.</p><p>The website is structured like the program: mission first, vehicle second, experiments at the center, evidence at the finish.</p></div></section>
 
-      <section id="vehicle" className="vehicle-section"><div className="section-head"><div><div className="eyebrow">FLIGHT VEHICLE · BASELINE</div><h2>superNOVA-1 sounding rocket</h2></div><p>A configurable student platform for payload demonstration. Final dimensions and competition class remain editable as the team closes its design.</p></div><div className="vehicle-grid"><img src={`${import.meta.env.BASE_URL}rocket-horizontal.svg`} alt="superNOVA-1 sounding rocket side-profile diagram"/><dl><div><dt>TARGET APOGEE</dt><dd>10,000 ft</dd></div><div><dt>PAYLOAD BAY</dt><dd>MODULAR</dd></div><div><dt>RECOVERY</dt><dd>DUAL EVENT</dd></div><div><dt>STATUS</dt><dd>DESIGN BASELINE</dd></div></dl></div></section>
+      <section id="vehicle" className="vehicle-section"><div className="section-head"><div><div className="eyebrow">FLIGHT VEHICLE · BASELINE</div><h2>superNOVA-1 sounding rocket</h2></div><p>A configurable student platform for payload demonstration. Final dimensions and competition class remain editable as the team closes its design.</p></div><div className="vehicle-grid vehicle-blueprint"><img src={`${import.meta.env.BASE_URL}rocket-system.svg`} alt="superNOVA-1 vehicle cutaway and subsystem schematic"/><dl><div><dt>TARGET APOGEE</dt><dd>10,000 ft</dd></div><div><dt>PAYLOAD BAY</dt><dd>MODULAR</dd></div><div><dt>RECOVERY</dt><dd>DUAL EVENT</dd></div><div><dt>STATUS</dt><dd>DESIGN BASELINE</dd></div></dl></div><div className="schematic-gallery"><article><div><img src={`${import.meta.env.BASE_URL}rocket-cutaway.svg`} alt="Vertical rocket cutaway drawing"/></div><span>PLATE 01 · VEHICLE</span><h3>Inside NOVA-1</h3><p>A transparent view of the complete stack connects external form to payload, avionics, recovery, propulsion, and structural interfaces.</p><a href="#mission-sequence">TRACE THE FLIGHT PROFILE →</a></article><article><div><img src={`${import.meta.env.BASE_URL}rocket-system.svg`} alt="Rocket subsystem architecture drawing"/></div><span>PLATE 02 · SYSTEMS</span><h3>Interfaces that must close</h3><p>Every bulkhead, harness, retention point, sensor, and deployment path belongs to a shared architecture—not an isolated subsystem.</p><a href="#team">MEET THE SUBSYSTEM TEAMS →</a></article><article><div><img src={`${import.meta.env.BASE_URL}payload.svg`} alt="Payload electronics module drawing"/></div><span>PLATE 03 · PAYLOAD</span><h3>Evidence rides here</h3><p>The science bay protects instrumentation, records the ascent environment, and returns interpretable data after recovery.</p><a href="#payloads">OPEN THE PAYLOAD MANIFEST →</a></article></div></section>
 
-      <section id="payloads" className="payload-section"><div className="eyebrow">PAYLOAD MANIFEST</div><h2>Experiments built to return evidence.</h2><div className="cards">{payloads.map((payload) => <article key={payload.code}><div className="card-top"><span>{payload.code}</span><i>{payload.status}</i></div><div className="payload-icon"><img src={`${import.meta.env.BASE_URL}payload.svg`} alt=""/></div><h3>{payload.title}</h3><p>{payload.copy}</p><div className="metric"><strong>{payload.metric}</strong><small>{payload.label}</small></div></article>)}</div></section>
+      <section id="payloads" className="payload-section"><div className="eyebrow">PAYLOAD MANIFEST</div><h2>Experiments built to return evidence.</h2><div className="cards">{payloads.map((payload) => <article key={payload.code}><div className="card-top"><span>{payload.code}</span><i>{payload.status}</i></div><PayloadSpecimens code={payload.code}/><h3>{payload.title}</h3><p>{payload.copy}</p><div className="metric"><strong>{payload.metric}</strong><small>{payload.label}</small></div></article>)}</div></section>
 
       <section className="flight-data"><div><div className="eyebrow">LIVE DEMONSTRATION · SIMULATED TELEMETRY</div><h2>Follow the flight profile.</h2><p>This baseline display gives the team a future home for real launch data, sensor plots, and recovered experiment results.</p></div><div className="plot" aria-label="Simulated altitude profile"><div className="plot-labels"><span>APOGEE</span><span>DEPLOY</span><span>RECOVERY</span></div><svg viewBox="0 0 800 260" role="img" aria-label="Illustrative rocket altitude curve"><path className="gridlines" d="M0 50H800M0 100H800M0 150H800M0 200H800M160 0V260M320 0V260M480 0V260M640 0V260"/><path className="curve" d="M0 235 C100 230 120 150 240 85 S390 18 450 28 S520 95 590 150 S700 215 800 230"/><circle cx="450" cy="28" r="6"/></svg><div className="plot-stats"><span><b>10,024</b> ft</span><span><b>0.94</b> Mach</span><span><b>16.2</b> s to apogee</span></div></div></section>
 
@@ -146,7 +229,7 @@ export default function App() {
 
       <section id="contact" className="contact"><div><div className="eyebrow">OPEN A CHANNEL · MANASSAS, VIRGINIA</div><h2>Help superNOVA reach apogee.</h2><p>Students, faculty, technical mentors, and sponsors can connect with the team as the competition campaign takes shape.</p></div><div className="actions"><a className="primary" href="mailto:jschmitt@schmittsanchezdefense.com?subject=superNOVA%20IREC%20Inquiry">CONTACT THE TEAM</a><a className="secondary" href="https://www.linkedin.com/company/supernova-rocketry-club/">LINKEDIN</a><button className="secondary" onClick={copyPage}>{copied ? "LINK COPIED" : "COPY SITE LINK"}</button></div></section>
     </main>
-    <footer><div className="footer-brand"><Mark small/><div><b>superNOVA</b><span>NVCC STUDENT ROCKETRY · PAYLOAD SCIENCE</span><button className="replay-intro" onClick={() => setReplayIntro(true)}>↻ REPLAY INTRODUCTION</button></div></div><div className="footer-contact"><a className="footer-sponsor" href="#support">SPONSOR US</a><a href="mailto:jschmitt@schmittsanchezdefense.com">jschmitt@schmittsanchezdefense.com</a><span>MANASSAS, VIRGINIA</span><a href="https://www.linkedin.com/company/supernova-rocketry-club/">LINKEDIN · superNOVA ROCKETRY CLUB</a></div><div className="footer-bottom"><span>ENGINEERED BY STUDENTS · {year}</span><span className="builder-credit"><i className="usa-flag" aria-label="United States flag"/> BUILT BY SANCHEZ &amp; SCHMITT</span><nav aria-label="Legal"><a href="privacy.html">PRIVACY</a><a href="terms.html">TERMS</a></nav></div></footer>
+    <footer><div className="footer-brand"><img className="footer-team-logo" src={`${import.meta.env.BASE_URL}supernova-header-logo.jpg`} alt="superNOVA rocket and orbital logo"/><div><b>superNOVA</b><span>NVCC STUDENT ROCKETRY · PAYLOAD SCIENCE</span><button className="replay-intro" onClick={() => setReplayIntro(true)}>↻ REPLAY INTRODUCTION</button></div></div><div className="footer-contact"><button className="footer-sponsor" onClick={beginSponsorJourney}>SPONSOR US</button><a href="mailto:jschmitt@schmittsanchezdefense.com">jschmitt@schmittsanchezdefense.com</a><span>MANASSAS, VIRGINIA</span><a href="https://www.linkedin.com/company/supernova-rocketry-club/">LINKEDIN · superNOVA ROCKETRY CLUB</a></div><div className="footer-bottom"><span>ENGINEERED BY STUDENTS · {year}</span><span className="builder-credit"><i className="usa-flag" aria-label="United States flag"/><img src={`${import.meta.env.BASE_URL}built-by-signature.svg`} alt="Built by Sanchez and Schmitt"/></span><nav aria-label="Legal"><a href="privacy.html">PRIVACY</a><a href="terms.html">TERMS</a></nav></div></footer>
     {top && <button className="top-button" onClick={() => scrollTo({ top: 0, behavior: "smooth" })}>RETURN TO PAD</button>}
     {intro && <Intro onComplete={finishIntro}/>}
     {replayIntro && <Intro cssOnly onComplete={finishReplay}/>}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 1080">
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#7ba98d" stroke-opacity=".18"/></pattern>
+    <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="460" height="1080" rx="24" fill="#06150f"/><rect x="12" y="12" width="436" height="1056" rx="18" fill="url(#grid)" stroke="#f0b323" stroke-opacity=".35"/>
+  <g fill="none" stroke="#f6f1dd" stroke-width="2">
+    <path d="M230 42C182 96 162 151 162 226v625l-62 121 130-58 130 58-62-121V226c0-75-20-130-68-184Z"/>
+    <path d="M162 226h136M162 358h136M162 508h136M162 684h136M162 820h136" stroke="#f0b323"/>
+    <path d="M185 225c4-62 19-105 45-143 26 38 41 81 45 143"/>
+    <path d="M177 250h106v84H177zM185 270h90M185 292h90M185 314h90"/>
+    <path d="M178 381h104v102H178zM190 397h35v31h-35zm45 0h35v31h-35zm-45 44h80"/>
+    <path d="M180 530h100v126H180zM195 548h70v25h-70zm0 38h70m-70 18h70m-70 18h70"/>
+    <path d="M190 708c30-18 50-18 80 0-30 20-50 20-80 0Zm0 38c30-18 50-18 80 0-30 20-50 20-80 0"/>
+    <path d="M188 837h84l-12 55h-60zM203 848h54M211 866h38"/>
+    <path d="M162 738 98 882v76l64-61m136-159 64 144v76l-64-61" stroke="#f0b323"/>
+    <path d="M84 72v842m-14-842h28M70 914h28" stroke="#79a489"/>
+  </g>
+  <g fill="#f0b323" font-family="monospace" font-size="13" letter-spacing="1">
+    <text x="24" y="52">NOVA-1 · CUTAWAY</text><text x="24" y="1040">NOTIONAL CONFIGURATION</text>
+    <text x="312" y="170">NOSECONE</text><text x="312" y="189">GPS / TRACKING</text>
+    <text x="312" y="274">PAYLOAD BAY</text><text x="312" y="293">SCIENCE ARRAY</text>
+    <text x="312" y="411">AVIONICS</text><text x="312" y="430">FLIGHT COMPUTER</text>
+    <text x="312" y="560">RECOVERY</text><text x="312" y="579">DUAL DEPLOY</text>
+    <text x="312" y="726">AIRFRAME</text><text x="312" y="745">LOAD PATH</text>
+    <text x="312" y="852">MOTOR</text><text x="312" y="871">RETENTION</text>
+    <text x="25" y="505" transform="rotate(-90 25 505)">REFERENCE LENGTH · VERIFY BEFORE FLIGHT</text>
+  </g>
+  <g stroke="#f0b323" stroke-width="1.5" fill="none"><path d="M282 179h22m-22 104h22m-22 137h22m-22 149h22m-22 166h22m-32 126h32"/><circle cx="230" cy="292" r="5" fill="#f0b323" filter="url(#glow)"/></g>
+</svg>
