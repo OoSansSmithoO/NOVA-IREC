@@ -189,6 +189,18 @@ ESRA describes these as living documents. Record the filename, revision, effecti
 
 ## Repository structure
 
+## Site navigation and contact
+
+The home page introduces the team and links directly to sponsorship. Dedicated views use GitHub Pages compatible query URLs: `?page=flight`, `?page=vehicle`, `?page=payloads`, `?page=engineering`, and `?page=support`. Each URL can be bookmarked or refreshed without server rewrite rules.
+
+The support planner opens an accessible contact dialog with the selected financial or in-kind proposal prefilled. Name, email, subject, and message are required; organization and phone are optional. Submitting prepares a draft in the visitor's email application. There is no website mail service or automatic submission, and drafts are held in memory only while the panel is open.
+
+Rocket Runner is an optional canvas game at the bottom. Use tap, Space, or Up Arrow to thrust. Pause/resume is available, and the game pauses when the browser tab becomes hidden.
+
+Regional activities are listed for Great Meadow in The Plains, Virginia. This is distinct from the IREC venue in Texas; team attendance and local event dates require separate confirmation.
+
+## Source layout
+
 ```text
 public/                  Static media, legal pages, SEO files, and 404 page
 scripts/                 Release/link verification utilities

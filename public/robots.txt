@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 
-# Public discovery files
+# Public mission pages, images, and scripts are crawlable.
+# On GitHub Pages, only the account-root robots.txt controls crawlers;
+# this project file documents the intended policy and sitemap location.
 Sitemap: https://oosanssmithoo.github.io/NOVA-IREC/sitemap.xml

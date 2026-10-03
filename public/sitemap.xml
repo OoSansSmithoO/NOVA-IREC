@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://oosanssmithoo.github.io/NOVA-IREC/</loc></url><url><loc>https://oosanssmithoo.github.io/NOVA-IREC/privacy.html</loc></url><url><loc>https://oosanssmithoo.github.io/NOVA-IREC/terms.html</loc></url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://oosanssmithoo.github.io/NOVA-IREC/</loc></url>
+  <url><loc>https://oosanssmithoo.github.io/NOVA-IREC/?page=flight</loc></url>
+  <url><loc>https://oosanssmithoo.github.io/NOVA-IREC/?page=vehicle</loc></url>
+  <url><loc>https://oosanssmithoo.github.io/NOVA-IREC/?page=payloads</loc></url>
+  <url><loc>https://oosanssmithoo.github.io/NOVA-IREC/?page=engineering</loc></url>
+  <url><loc>https://oosanssmithoo.github.io/NOVA-IREC/?page=support</loc></url>
+  <url><loc>https://oosanssmithoo.github.io/NOVA-IREC/privacy.html</loc></url>
+  <url><loc>https://oosanssmithoo.github.io/NOVA-IREC/terms.html</loc></url>
+</urlset>
